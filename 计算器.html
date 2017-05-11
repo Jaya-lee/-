@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	.clear{
+		clear:both;
+	}
+		.com{
+			width: 400px;
+			height: 800px;
+			margin: 0 auto;
+			margin-top: 100px;
+			}
+		input{
+			width: 100px;
+			height: 100px;
+			font-size: 50px;
+			display: block;
+		}
+		.com>.txt{
+			width: 400px;
+			color: #fff;
+			height: 100px;
+			background: #000;
+			font-size: 50px;
+			text-align: right;
+			line-height: 100px;
+		}
+		.number{
+			width: 300px;
+			float: left;
+		}
+		.number input{
+			float: left;
+		}
+		.number input:nth-child(10){
+			width: 200px;
+		}
+		.sign{
+			float: right;
+
+		}
+		.sign input{
+			background: orange;
+		}
+		.bottom input{
+			background: teal;
+		}
+		.result{
+			width: 200px;
+			float: left;
+		}
+		.clear{
+			width: 200px;
+			float: right;
+			margin-top: -100px;
+		}
+	</style>
+</head>
+<body>
+	<div class="com">
+		<input class="txt" type="text">
+		<div class="number">
+			<input type="button" value="7">
+			<input type="button" value="8">
+			<input type="button" value="9">
+			<input type="button" value="4">
+			<input type="button" value="5">
+			<input type="button" value="6">
+			<input type="button" value="1">
+			<input type="button" value="2">
+			<input type="button" value="3">
+			<input type="button" value="0">
+			<input type="button" value=".">
+		</div>
+		<div class="sign">
+			<input type="button" value="/">
+			<input type="button" value="*">
+			<input type="button" value="-">
+			<input type="button" value="+">
+		</div>
+		<div class="bottom">
+			<input class="result" type="button" value="=">
+			<input class="clear" type="button" value="AC">
+		</div>
+	</div>
+	<script src="jquery-3.1.1.js"></script>
+	<script>
+	var num1="";	
+	var num2="";
+	var sign="";
+	var res="";		//定义一个res,作为点击“=”时输出的结果
+	var res1=0;		//定义一个res1,作为点击“+、-、*、/”时输出的结果
+		$(".number>input").click(function(){
+			var num = $(this).val();	//获取当前点击按钮时的value值
+			if(res!==""){		
+			//当执行完一次运算并，点了“=”后，再执行下一次运算时，将原来的所有获取到的值初始化
+				num1="";			
+				res="";
+				num2=sign="";
+				num1=num1+num;
+				$(".txt").val(num1);
+			}else{
+			if(sign==""){ //当没有点击符号时，给num1赋值
+				num1=num1+num;
+				$(".txt").val(num1);
+
+			}else{ //点击完符号后，给num2赋值
+				num2=num2+num;
+				$(".txt").val(num1+sign+num2);
+			}
+		}
+		})
+		function count(num1,sign,num2){ //一个运算的函数
+			switch(sign){
+				case "+": res=Number(num1)+Number(num2);break;
+				case "-": res=Number(num1)-Number(num2);break;
+				case "*": res=Number(num1)*Number(num2);break;
+				case "/": res=Number(num1)/Number(num2);break;
+				}
+				return(res) //返回结果
+		}
+		$(".sign>input").click(function(){
+				if(num2 !=""){ //当存在num2时，执行运算
+			 	res1=count(num1,sign,num2);//调用了运算函数，并且把返回值给res1
+				sign=$(this).val(); //获取sign的value值，必须在运算之后，否则会使再一次点击sign实现连加功能时，之前的符号变成了新的符号，使运算错误。
+				num1=res1;//将运算一次后的结果赋给num1，从而进行下一次运算。
+				res="";//将res清空，实现点击完“=”后，得到的结果再次点符号时正确运算
+				num2="";//num2初始化
+				
+			}else{
+				sign=$(this).val();//只有num1时，获取sign的value
+			}
+			$(".txt").val(num1 + sign); //点击运算符时文本框的内容为num1+运算符
+		})
+		$(".result").click(function(){//点击“=”时计算结果
+			res=count(num1,sign,num2);//调用运算函数，返回值给结果
+			$(".txt").val(res) //文本框输出结果
+			})
+		$(".clear").click(function(){//清零，把所有值初始化
+			$(".txt").val("0")
+			num1=num2=sign="";
+		})
+	</script>
+</body>
+</html>
