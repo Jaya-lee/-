@@ -34,74 +34,75 @@
 		}
 		.number{
 			width: 300px;
-			float: left;
+			display: flex;
+			flex-wrap: wrap;
 		}
-		.number input{
-			float: left;
-		}
+	.number input{
+		height: 100px;
+	}
 		.number input:nth-child(10){
 			width: 200px;
 		}
-		.sign{
-			float: right;
-
-		}
 		.sign input{
 			background: orange;
+		}
+		.bottom{
+			width: 400px;
+			display: flex;
 		}
 		.bottom input{
 			background: teal;
 		}
 		.result{
 			width: 200px;
-			float: left;
+
 		}
-		.clear{
+		.clean{
 			width: 200px;
-			float: right;
-			margin-top: -100px;
 		}
 	</style>
 </head>
 <body>
 	<div class="com">
 		<input class="txt" type="text">
-		<div class="number">
-			<input type="button" value="7">
-			<input type="button" value="8">
-			<input type="button" value="9">
-			<input type="button" value="4">
-			<input type="button" value="5">
-			<input type="button" value="6">
-			<input type="button" value="1">
-			<input type="button" value="2">
-			<input type="button" value="3">
-			<input type="button" value="0">
-			<input type="button" value=".">
-		</div>
-		<div class="sign">
-			<input type="button" value="/">
-			<input type="button" value="*">
-			<input type="button" value="-">
-			<input type="button" value="+">
+		<div style="display:flex;">
+			<div class="number">
+				<input type="button" value="7">
+				<input type="button" value="8">
+				<input type="button" value="9">
+				<input type="button" value="4">
+				<input type="button" value="5">
+				<input type="button" value="6">
+				<input type="button" value="1">
+				<input type="button" value="2">
+				<input type="button" value="3">
+				<input type="button" value="0">
+				<input type="button" value=".">
+			</div>
+			<div class="sign">
+				<input type="button" value="/">
+				<input type="button" value="*">
+				<input type="button" value="-">
+				<input type="button" value="+">
+			</div>
 		</div>
 		<div class="bottom">
 			<input class="result" type="button" value="=">
-			<input class="clear" type="button" value="AC">
+			<input class="clean" type="button" value="AC">
 		</div>
 	</div>
-	<script src="jquery-3.1.1.js"></script>
+	<script src="js/jquery-3.1.1.js"></script>
 	<script>
-	var num1="";	
+	var num1="";
 	var num2="";
 	var sign="";
 	var res="";		//定义一个res,作为点击“=”时输出的结果
 	var res1=0;		//定义一个res1,作为点击“+、-、*、/”时输出的结果
 		$(".number>input").click(function(){
 			var num = $(this).val();	//获取当前点击按钮时的value值
-			if(res!==""){		
+			if(res!==""){
 			//当执行完一次运算并，点了“=”后，再执行下一次运算时，将原来的所有获取到的值初始化
-				num1="";			
+				num1="";
 				res="";
 				num2=sign="";
 				num1=num1+num;
@@ -133,7 +134,7 @@
 				num1=res1;//将运算一次后的结果赋给num1，从而进行下一次运算。
 				res="";//将res清空，实现点击完“=”后，得到的结果再次点符号时正确运算
 				num2="";//num2初始化
-				
+
 			}else{
 				sign=$(this).val();//只有num1时，获取sign的value
 			}
